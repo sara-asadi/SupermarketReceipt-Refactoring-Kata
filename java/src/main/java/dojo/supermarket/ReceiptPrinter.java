@@ -18,16 +18,26 @@ public class ReceiptPrinter {
 
     public String printReceipt(Receipt receipt) {
         StringBuilder result = new StringBuilder();
+
         StringBuilder receiptItemsLine = getReceiptItemsLine(receipt);
         result.append(receiptItemsLine);
 
+        StringBuilder discounts = getDiscounts(receipt);
+        result.append(discounts);
+
+        result.append("\n");
+        result.append(presentTotal(receipt));
+
+        return result.toString();
+    }
+
+    private StringBuilder getDiscounts(Receipt receipt) {
+        StringBuilder result = new StringBuilder();
         for (Discount discount : receipt.getDiscounts()) {
             String discountPresentation = presentDiscount(discount);
             result.append(discountPresentation);
         }
-        result.append("\n");
-        result.append(presentTotal(receipt));
-        return result.toString();
+        return result;
     }
 
     private StringBuilder getReceiptItemsLine(Receipt receipt) {
